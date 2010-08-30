@@ -1,13 +1,41 @@
+$text: rgb(0, 0, 0)
+
+$dark-grey: #333
+$light-grey: #ccc
+$white: #fff
+
+$excluded: #e0dedb
+$unran: #ce8b8c
+$ran: #bed2be
+
+
 body
   background: #f4f2ed
   font: 12px/1.3em Helvetica
 
+
+// Header
+header
+  margin: 2em .5em
+  
+  h1
+    color: $dark-grey
+  h2
+    color: lighten($dark-grey, 40%)
+    font-size: 16px
+
+
+
+// Table
+.table-wrapper
+  min-width: 700px
+
 table
   border: 1px solid grey
-  background: #ccc
+  background: $light-grey
   border-collapse: collapse
-  width: 90%
-  margin: 1em
+  width: 100%
+  margin-bottom: 1em
 
 table.source, pre, code
   font: 11px/1.2em Menlo
@@ -15,28 +43,52 @@ table.source, pre, code
 td pre
   margin: 0
 
+
+// Summary
 .summary
   margin-bottom: 1em
-  background: #e0dedb
+  background: $excluded
   
-.summary tbody tr:hover 
-  background: #ccc
+  tbody tr:hover 
+    background: darken($excluded, 10%)
 
-.summary thead
-  background: #666666
-  color: #ffffff
+  thead
+    background: $dark-grey
+    color: $light-grey
 
-.summary tr
-  text-align: left
+  tr
+    text-align: left
 
-.summary th, .summary td
-  padding: .5em
+  th, td
+    padding: .5em
+  
+  
+// Source  
+.no
+  color: $light-grey
+  background: $dark-grey
+  padding: 0 0 0 3px
+  width: 25px
+  
+tr:hover .no
+  color: $white
+
+tr pre
+  margin-left: 3px
 
 .excluded 
-  background: #e0dedb
+  background: $excluded
+  &:hover
+    background: darken($excluded, 10%)
   
 .unran 
-  background: #ce8b8c
+  background: $unran
+  &:hover
+    background: darken($unran, 10%)
   
 .ran 
-  background: #bed2be
+  background: $ran
+  &:hover
+    background: darken($ran, 10%)
+    
+    

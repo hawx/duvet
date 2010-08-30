@@ -2,12 +2,23 @@ body {
   background: #f4f2ed;
   font: 12px/1.3em Helvetica; }
 
+header {
+  margin: 2em 0.5em; }
+  header h1 {
+    color: #333333; }
+  header h2 {
+    color: #999999;
+    font-size: 16px; }
+
+.table-wrapper {
+  min-width: 700px; }
+
 table {
   border: 1px solid grey;
   background: #cccccc;
   border-collapse: collapse;
-  width: 90%;
-  margin: 1em; }
+  width: 100%;
+  margin-bottom: 1em; }
 
 table.source, pre, code {
   font: 11px/1.2em Menlo; }
@@ -18,25 +29,39 @@ td pre {
 .summary {
   margin-bottom: 1em;
   background: #e0dedb; }
+  .summary tbody tr:hover {
+    background: #c8c5c0; }
+  .summary thead {
+    background: #333333;
+    color: #cccccc; }
+  .summary tr {
+    text-align: left; }
+  .summary th, .summary td {
+    padding: 0.5em; }
 
-.summary tbody tr:hover {
-  background: #cccccc; }
+.no {
+  color: #cccccc;
+  background: #333333;
+  padding: 0 0 0 3px;
+  width: 25px; }
 
-.summary thead {
-  background: #666666;
+tr:hover .no {
   color: white; }
 
-.summary tr {
-  text-align: left; }
-
-.summary th, .summary td {
-  padding: 0.5em; }
+tr pre {
+  margin-left: 3px; }
 
 .excluded {
   background: #e0dedb; }
+  .excluded:hover {
+    background: #c8c5c0; }
 
 .unran {
   background: #ce8b8c; }
+  .unran:hover {
+    background: #bf6768; }
 
 .ran {
   background: #bed2be; }
+  .ran:hover {
+    background: #a0bda0; }

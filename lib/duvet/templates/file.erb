@@ -12,42 +12,46 @@
       <h2><%= file['path'] %></h2>
     </header>
     
-    <table class="summary" border="none">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Total Lines</th>
-          <th>Lines of Code</th>
-          <th>Total Coverage</th>
-          <th>Code Coverage</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= file['path'] %></td>
-          <td><%= file['lines'] %></td>
-          <td><%= file['lines_code'] %></td>
-          <td><%= coverage['total'] %></td>
-          <td><%= coverage['code'] %></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table class="summary" border="none">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Total Lines</th>
+            <th>Lines of Code</th>
+            <th>Total Coverage</th>
+            <th>Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= file['path'] %></td>
+            <td><%= file['lines'] %></td>
+            <td><%= file['lines_code'] %></td>
+            <td><%= coverage['total'] %></td>
+            <td><%= coverage['code'] %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   
-    <table class="source" border="none">
-    <% file["source"].zip(coverage["lines"]).each_with_index do |(line, count), i| %>
-      <% if count.nil? %>
-        <tr class="excluded">
-      <% elsif count.zero? %>
-        <tr class="unran">
-      <% else %>
-        <tr class="ran">
+    <div class="table-wrapper">
+      <table class="source" border="none">
+      <% file["source"].zip(coverage["lines"]).each_with_index do |(line, count), i| %>
+        <% if count.nil? %>
+          <tr class="excluded">
+        <% elsif count.zero? %>
+          <tr class="unran">
+        <% else %>
+          <tr class="ran">
+        <% end %>
+          <td class="no"><%= i %></td>
+          <td><pre><code><%= line.gsub("\n", "") %></code></pre></td>
+          <td><%= count %></td>
+        </tr>
       <% end %>
-        <td><%= i %></td>
-        <td><pre><code><%= line.gsub("\n", "") %></code></pre></td>
-        <td><%= count %></td>
-      </tr>
-    <% end %>
-    </table>
+      </table>
+    </div>
   
   </body>
 </html>
