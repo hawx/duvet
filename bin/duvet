@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+#
+# A command line tool for coverage testing, I'm not sure if this
+# will even work but it is worth a try!
+#
+# Example:
+#   duvet test/test_class.rb
+#
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require 'clive'
+require 'duvet'
+
+opts = {}
+c = Clive.new do
+  
+  header "Usage: duvet [options] [paths]"
+  
+  flag(:css, "PATH", "Use custom css file") do |i| 
+    opts[:css] = i
+  end
+  
+  flag(:style, "Choose style, defaults to 'rcov'") do |i|
+    opts[:style] = i || 'rcov'
+  end
+  
+end
+
+# Start coverage, then require paths
+def run(paths)
+  Coverage.start
+  paths.each do |p|
+    require p
+  end
+  
+  c = Covs.new(Coverage.result)
+  c.write
+end
+
+args = c.parse(ARGV)
+run(args)

@@ -18,13 +18,3 @@ require 'sass'
 require 'duvet/ext'
 require 'duvet/covs'
 require 'duvet/cov'
-
-# Start the code coverage
-Coverage.start
-
-# Require the files we care about
-require 'lib/test'
-
-# Print out the results
-c = Covs.new(Coverage.result)
-c.write
