@@ -1,6 +1,7 @@
 require 'ostruct'
 require 'erubis'
 require 'pathname'
+require 'sass'
 
 class Cov
   attr_accessor :files
@@ -28,6 +29,16 @@ class Cov
     @files.each do |i|
       i.write(dir)
     end
+    write_styles
+  end
+  
+  def write_styles(dir='cov', style='rcov')
+    @styles = {'rcov' => File.dirname(__FILE__) + '/styles/rcov.sass'}
+    write_path = dir.to_p + 'styles.css'
+    
+    f = File.new(write_path, "w")
+    template = File.read(@styles[style])
+    f.write(Sass::Engine.new(template).render)
   end
   
   # Stores coverage for a certain file
