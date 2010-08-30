@@ -1,3 +1,7 @@
+require 'ostruct'
+require 'erubis'
+require 'pathname'
+
 class Cov
   attr_accessor :files
 
@@ -14,6 +18,18 @@ class Cov
     end
   end
   
+  def format
+    @files.each do |i|
+      puts i.format
+    end
+  end
+  
+  def write(dir='cov')
+    @files.each do |i|
+      i.write(dir)
+    end
+  end
+  
   # Stores coverage for a certain file
   class CovFile
     attr_accessor :cov, :path
@@ -21,6 +37,12 @@ class Cov
     def initialize(path, cov)
       @path = path
       @cov = cov
+      write
+    end
+    
+    # @return [Integer] number of lines of code that can be executed
+    def lines_of_code
+      @cov.reject {|i| i.nil?}.length
     end
     
     # Gives a fraction from 0 to 1 of how many lines of code have 
@@ -67,6 +89,40 @@ class Cov
       str << "total coverage: #{total_coverage}\n"
       str << "code coverage:  #{code_coverage}\n"
       str
+    end
+    
+    # @return [Hash] a hash of data for templating
+    def data
+      lines = File.readlines(@path)
+      #lines.collect! {|l| l.gsub(' ', '&nbsp;')}
+      {
+        "file" => {
+          "path" => @path,
+          "source" => lines,
+          "lines" => @cov.length,
+          "lines_code" => lines_of_code
+        },
+        "coverage" => {
+          "code" => "%.2f%" % (code_coverage*100),
+          "total" => "%.2f%" % (total_coverage*100),
+          "lines" => @cov
+        }
+      }
+    end
+    
+    # Formats the coverage for the file to be written to a html
+    # file, then viewed in a web browser.
+    #
+    # @return [String]
+    def format
+      template = File.read(File.join( File.dirname(__FILE__), "templates", "file.erb" ))
+      e = Erubis::Eruby.new(template).result(self.data)
+      e
+    end
+    
+    def write(dir='cov')
+      f = File.new( (dir.to_p + @path.to_p.file_name).to_s + '.html', "w" )
+      f.write(format)
     end
     
   end

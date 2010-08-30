@@ -12,6 +12,7 @@ $:.unshift File.dirname(__FILE__)
 require 'coverage'
 require 'erb'
 
+require 'duvet/ext'
 require 'duvet/cov'
 
 # Start the code coverage
@@ -22,4 +23,4 @@ require 'lib/test'
 
 # Print out the results
 c = Cov.new(Coverage.result)
-c.report
+c.write

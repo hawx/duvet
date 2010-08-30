@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= file['path'] %></title>
+    <link rel="stylesheet" href="css/screen.css" type="text/css" />
+    <style>
+      body {
+        background: #f4f2ed;
+        font: 12px/1.3em Helvetica;
+      }
+      
+      table {
+        border: 1px solid grey;
+        background: #ccc;
+        border-collapse: collapse;
+        width: 90%;
+        margin: 1em;
+      }
+      
+      table.source, pre, code {
+        font: 11px/1.2em Menlo;
+      }
+      
+      td pre {
+        margin: 0;
+      }
+      
+      .summary {
+        margin-bottom: 1em;
+        background: #e0dedb;
+      }
+      .summary tbody tr:hover {background: #ccc;}
+      
+      .summary thead {
+        background: #666666;
+        color: #ffffff;
+      }
+      .summary tr {
+        text-align: left;
+      }
+      .summary th, .summary td {
+        padding: .5em;
+      }
+    
+      .excluded {background: #e0dedb;}
+      .unran {background: #ce8b8c;}
+      .ran {background: #bed2be;}
+    </style>
+  </head>
+  <body>
+  
+    <header>
+      <h1>Coverage</h1>
+      <h2><%= file['path'] %></h2>
+    </header>
+    
+    <table class="summary" border="none">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Total Lines</th>
+          <th>Lines of Code</th>
+          <th>Total Coverage</th>
+          <th>Code Coverage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= file['path'] %></td>
+          <td><%= file['lines'] %></td>
+          <td><%= file['lines_code'] %></td>
+          <td><%= coverage['total'] %></td>
+          <td><%= coverage['code'] %></td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <table class="source" border="none">
+    <% file["source"].zip(coverage["lines"]).each_with_index do |(line, count), i| %>
+      <% if count.nil? %>
+        <tr class="excluded">
+      <% elsif count.zero? %>
+        <tr class="unran">
+      <% else %>
+        <tr class="ran">
+      <% end %>
+        <td><%= i %></td>
+        <td><pre><code><%= line.gsub("\n", "") %></code></pre></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+    </table>
+  
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>/Users/Josh/Code/Ruby/duvet/lib/test.rb</title>
+    <link rel="stylesheet" href="css/screen.css" type="text/css" />
+    <style>
+      body {
+        background: #f4f2ed;
+        font: 12px/1.3em Helvetica;
+      }
+      
+      table {
+        border: 1px solid grey;
+        background: #ccc;
+        border-collapse: collapse;
+        width: 90%;
+        margin: 1em;
+      }
+      
+      table.source, pre, code {
+        font: 11px/1.2em Menlo;
+      }
+      
+      td pre {
+        margin: 0;
+      }
+      
+      .summary {
+        margin-bottom: 1em;
+        background: #e0dedb;
+      }
+      .summary tbody tr:hover {background: #ccc;}
+      
+      .summary thead {
+        background: #666666;
+        color: #ffffff;
+      }
+      .summary tr {
+        text-align: left;
+      }
+      .summary th, .summary td {
+        padding: .5em;
+      }
+    
+      .excluded {background: #e0dedb;}
+      .unran {background: #ce8b8c;}
+      .ran {background: #bed2be;}
+    </style>
+  </head>
+  <body>
+  
+    <header>
+      <h1>Coverage</h1>
+      <h2>/Users/Josh/Code/Ruby/duvet/lib/test.rb</h2>
+    </header>
+    
+    <table class="summary" border="none">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Total Lines</th>
+          <th>Lines of Code</th>
+          <th>Total Coverage</th>
+          <th>Code Coverage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>/Users/Josh/Code/Ruby/duvet/lib/test.rb</td>
+          <td>21</td>
+          <td>10</td>
+          <td>42.86%</td>
+          <td>90.00%</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <table class="source" border="none">
+        <tr class="excluded">
+        <td>0</td>
+        <td><pre><code>###</code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="excluded">
+        <td>1</td>
+        <td><pre><code># This is MyClass.  There are many like it, but this one is mine.</code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="excluded">
+        <td>2</td>
+        <td><pre><code></code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="ran">
+        <td>3</td>
+        <td><pre><code>class MyClass</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="ran">
+        <td>4</td>
+        <td><pre><code>  attr_accessor :coffee, :doughnuts</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="excluded">
+        <td>5</td>
+        <td><pre><code></code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="ran">
+        <td>6</td>
+        <td><pre><code>  def initialize</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="ran">
+        <td>7</td>
+        <td><pre><code>    @coffee    = 0</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="ran">
+        <td>8</td>
+        <td><pre><code>    @doughnuts = 0</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="excluded">
+        <td>9</td>
+        <td><pre><code>  end</code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="excluded">
+        <td>10</td>
+        <td><pre><code></code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="ran">
+        <td>11</td>
+        <td><pre><code>  def happy?</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="unran">
+        <td>12</td>
+        <td><pre><code>    @coffee > 2 && @doughnuts > 1</code></pre></td>
+        <td>0</td>
+      </tr>
+        <tr class="excluded">
+        <td>13</td>
+        <td><pre><code>  end</code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="excluded">
+        <td>14</td>
+        <td><pre><code>end</code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="excluded">
+        <td>15</td>
+        <td><pre><code></code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="ran">
+        <td>16</td>
+        <td><pre><code>instance = MyClass.new</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="excluded">
+        <td>17</td>
+        <td><pre><code></code></pre></td>
+        <td></td>
+      </tr>
+        <tr class="ran">
+        <td>18</td>
+        <td><pre><code>5.times do</code></pre></td>
+        <td>1</td>
+      </tr>
+        <tr class="ran">
+        <td>19</td>
+        <td><pre><code>  instance.coffee += 1</code></pre></td>
+        <td>5</td>
+      </tr>
+        <tr class="excluded">
+        <td>20</td>
+        <td><pre><code>end</code></pre></td>
+        <td></td>
+      </tr>
+    </table>
+  
+  </body>
+</html>
