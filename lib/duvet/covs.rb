@@ -37,7 +37,7 @@ module Duvet
       }
     end
     
-    def format
+    def format(dir='cov')
       template = File.read(File.join( File.dirname(__FILE__), "templates", "index.erb" ))
       e = Erubis::Eruby.new(template).result(self.data)
       e
