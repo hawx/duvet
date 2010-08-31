@@ -11,7 +11,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'clive'
 require 'duvet'
 
-opts = {}
+opts = {:dir => 'cov', :style => 'rcov'}
 c = Clive.new do
   
   header "Usage: duvet [options] [paths]"
@@ -20,19 +20,23 @@ c = Clive.new do
     opts[:css] = i
   end
   
-  flag(:style, "Choose style, defaults to 'rcov'") do |i|
-    opts[:style] = i || 'rcov'
+  flag(:s, :style, "ARG", "Choose style") do |i|
+    opts[:style] = i
+  end
+  
+  flag(:d, :dir, "PATH", "Directory to write coverage results") do |i|
+    opts[:dir] = i
   end
   
 end
 
 # Start coverage, then require paths
-def run(paths)
-  Duvet.start
+def run(paths, opts)
+  Duvet.start(opts)
   paths.each do |p|
     require p
   end
 end
 
 args = c.parse(ARGV)
-run(args)
+run(args, opts)

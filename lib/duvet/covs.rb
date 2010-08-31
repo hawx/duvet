@@ -44,6 +44,8 @@ module Duvet
     end
     
     def write(dir='cov', style='rcov')
+      FileUtils.mkdir_p(dir)
+    
       f = File.new( dir.to_p + 'index.html', "w")
       f.write(format)
       
