@@ -28,13 +28,10 @@ end
 
 # Start coverage, then require paths
 def run(paths)
-  Coverage.start
+  Duvet.start
   paths.each do |p|
     require p
   end
-  
-  c = Covs.new(Coverage.result)
-  c.write
 end
 
 args = c.parse(ARGV)

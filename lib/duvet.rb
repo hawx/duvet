@@ -23,19 +23,33 @@ require 'duvet/cov'
 module Duvet
 
   # Start tracking
-  def start
+  def self.start
     Coverage.start
-    running = true
+    @running = true
   end
   
   # Get result
-  def result
-    Cov.new(Coverage.result) if running
+  def self.result
+    Duvet::Covs.new(Coverage.result) if running?
+  ensure
+    @running = false
   end
   
   # Write results
-  def write
-    result.write
+  def self.write
+    self.result.write if running?
+  end
+  
+  def self.at_exit
+    Proc.new { self.write }
+  end
+  
+  def self.running?
+    @running
   end
 
+end
+
+at_exit do
+  Duvet.at_exit.call
 end
