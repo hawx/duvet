@@ -8,6 +8,11 @@ module Duvet
       write
     end
     
+    # @return [Integer] number of lines in file
+    def lines
+      @cov.length
+    end
+    
     # @return [Integer] number of lines of code that can be executed
     def lines_of_code
       @cov.reject {|i| i.nil?}.length
@@ -25,14 +30,24 @@ module Duvet
       ran_lines.to_f / total_lines.to_f
     end
     
+    # @return [String] #code_coverage as ??.??%
+    def code_coverage_percent
+      "%.2f%" % (code_coverage*100)
+    end
+    
     # Similar to #code_coverage but counts all lines, executable
     # or not.
     #
     # @return [Integer] lines executed as a fraction
     def total_coverage
-      total_lines = @cov.length
+      total_lines = lines
       ran_lines = @cov.reject {|i| i.nil? || i.zero?}.length
       ran_lines.to_f / total_lines.to_f
+    end
+    
+    # @return [String] #total_coverage as ??.??%
+    def total_coverage_percent
+      "%.2f%" % (total_coverage*100)
     end
     
     # Creates a report showing the source code.
@@ -66,12 +81,12 @@ module Duvet
           "path" => @path,
           "url" => @path.to_p.file_name.to_s + '.html',
           "source" => File.readlines(@path),
-          "lines" => @cov.length,
+          "lines" => lines,
           "lines_code" => lines_of_code
         },
         "coverage" => {
-          "code" => "%.2f%" % (code_coverage*100),
-          "total" => "%.2f%" % (total_coverage*100),
+          "code" => code_coverage_percent,
+          "total" => total_coverage_percent,
           "lines" => @cov
         }
       }

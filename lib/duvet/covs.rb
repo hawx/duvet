@@ -21,6 +21,31 @@ module Duvet
     end
     
     
+  # @group Totals
+    
+    # @return [Integer]
+    def total_lines
+      self.inject(0) {|a, e| a + e.cov.length }
+    end
+    
+    # @return [Integer]
+    def total_code_lines
+      self.inject(0) {|a, e| a + e.lines_of_code }
+    end
+    
+    # @return [Integer]
+    def total_total_cov
+      "%.2f%" % (self.inject(0) {|a, e| a + e.total_coverage*100 } / self.size)
+    end
+    
+    # @return [Integer]
+    def total_code_cov
+      "%.2f%" % (self.inject(0) {|a, e| a + e.code_coverage*100 } / self.size)
+    end
+    
+  # @endgroup
+    
+    
     def data
       r = []
       self.each do |i|
@@ -29,10 +54,10 @@ module Duvet
       {
         'files' => r,
         'total' => {
-          'lines' => self.inject(0) {|a, e| a + e.cov.length },
-          'lines_code' => self.inject(0) {|a, e| a + e.lines_of_code },
-          'total_cov' => "%.2f%" % (self.inject(0) {|a, e| a + e.total_coverage*100 } / self.size),
-          'code_cov' => "%.2f%" % (self.inject(0) {|a, e| a + e.code_coverage*100 } / self.size)
+          'lines' => total_lines,
+          'lines_code' => total_code_lines,
+          'total_cov' => total_total_cov,
+          'code_cov' => total_code_cov
         }
       }
     end
@@ -44,15 +69,19 @@ module Duvet
     end
     
     def write(dir='cov', style='rcov')
-      FileUtils.mkdir_p(dir)
-    
-      f = File.new( dir.to_p + 'index.html', "w")
-      f.write(format)
+      if self.size > 0
+        FileUtils.mkdir_p dir
       
-      self.each do |i|
-        i.write(dir)
+        f = File.new( dir.to_p + 'index.html', "w")
+        f.write(format)
+        
+        self.each do |i|
+          i.write(dir)
+        end
+        write_styles(dir, style)
+      else
+        p "no files"
       end
-      write_styles(dir, style)
     end
     
     def write_styles(dir='cov', style='rcov')

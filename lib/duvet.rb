@@ -1,13 +1,9 @@
 $:.unshift File.dirname(__FILE__)
 
-# Add this to test/helper.rb
-# require 'coverage'
+# Add this to test/helper.rb at the before __anything__ else
 #
-# Coverage.start
-#
-# at_exit do
-#   p Coverage.result
-# end
+#   require 'duvet'
+#   Duvet.start
 #
 require 'coverage'
 require 'ostruct'
@@ -23,10 +19,12 @@ require 'duvet/cov'
 module Duvet
 
   attr_accessor :opts
+  
+  DEFAULTS = {:dir => 'cov', :style => 'rcov'}
 
   # Start tracking
-  def self.start(opts)
-    @opts = opts
+  def self.start(opts={})
+    @opts = DEFAULTS.merge(opts)
   
     Coverage.start
     @running = true
@@ -34,7 +32,17 @@ module Duvet
   
   # Get result
   def self.result
-    @result ||= Duvet::Covs.new(Coverage.result) if running?
+    cov = Coverage.result if running?
+    if @opts[:filter]
+      filtered = {}
+      cov.each do |k, v|
+        if k.include?(@opts[:filter])
+          filtered[k] = v
+        end
+      end
+      cov = filtered
+    end
+    @result ||= Duvet::Covs.new(cov)
   ensure
     @running = false
   end
