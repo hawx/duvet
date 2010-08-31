@@ -61,6 +61,12 @@ td pre
 
   th, td
     padding: .5em
+    
+    
+// Totals
+.totals
+  border-top: 1px solid black
+  background: darken($excluded, 10%)
   
   
 // Source  
@@ -72,6 +78,23 @@ td pre
   
 tr:hover .no
   color: $white
+
+.count
+  background: $white
+  -webkit-border-radius: 4px
+  -webkit-border-top-left-radius: 0px
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2)
+  border: 1px solid black
+  display: block
+  padding: 3px
+  position: absolute
+  margin-top: -10px
+  margin-left: -15px
+  opacity: 0
+  
+tr:hover .count
+  opacity: 1
+  
 
 tr pre
   margin-left: 3px

@@ -3,8 +3,45 @@
   <head>
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" href="css/screen.css" type="text/css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
   <body>
+  
+    <header>
+      <h1>Coverage</h1>
+    </header>
+    
+    <div class="table-wrapper">
+      <table class="summary" border="none">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Total Lines</th>
+            <th>Lines of Code</th>
+            <th>Total Coverage</th>
+            <th>Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% files.each do |f| %>
+          <tr>
+            <td><a href="<%= f['file']['url'] %>"><%= f['file']['path'] %></a></td>
+            <td><%= f['file']['lines'] %></td>
+            <td><%= f['file']['lines_code'] %></td>
+            <td><%= f['coverage']['total'] %></td>
+            <td><%= f['coverage']['code'] %></td>
+          </tr>
+          <% end %>
+          
+          <tr class="totals">
+            <td>Total</td>
+            <td><%= total['lines'] %></td>
+            <td><%= total['lines_code'] %></td>
+            <td><%= total['total_cov'] %></td>
+            <td><%= total['code_cov'] %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

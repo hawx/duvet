@@ -47,7 +47,7 @@
         <% end %>
           <td class="no"><%= i %></td>
           <td><pre><code><%= line.gsub("\n", "") %></code></pre></td>
-          <td><%= count %></td>
+          <td><% if count %><span class="count"><%= count %></span><% end %></td>
         </tr>
       <% end %>
       </table>

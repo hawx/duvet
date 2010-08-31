@@ -60,12 +60,11 @@ class Cov
   
   # @return [Hash] a hash of data for templating
   def data
-    lines = File.readlines(@path)
-    #lines.collect! {|l| l.gsub(' ', '&nbsp;')}
     {
       "file" => {
         "path" => @path,
-        "source" => lines,
+        "url" => @path.to_p.file_name.to_s + '.html',
+        "source" => File.readlines(@path),
         "lines" => @cov.length,
         "lines_code" => lines_of_code
       },
