@@ -92,11 +92,7 @@ module Duvet
 
     # @todo Allow you to change style used
     def write_resources(dir, style)
-      __DIR__ = File.dirname(__FILE__)
-      res = {"#{__DIR__}/resources/jquery.js" => dir.to_p + 'jquery.js',
-             "#{__DIR__}/resources/main.js" => dir.to_p + 'main.js'}
-             
-      dirs = Dir.glob("#{__DIR__}/resources/*")
+      dirs = Dir.glob("#{File.dirname(__FILE__)}/resources/*")
       js = dirs.find_all {|i| i[-2..-1] == 'js'}
       sass = dirs.find_all {|i| i[-4..-1] == 'sass'}
       

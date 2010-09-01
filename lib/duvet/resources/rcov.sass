@@ -93,8 +93,6 @@ td pre
   .ascending::after
     content: '▲'
     
-    
-  // Headers
   .lines, .loc, .ran, .cov, .code
     width: 100px
     
@@ -105,47 +103,49 @@ td pre
   font-weight: bold
   
   
-// Source  
-.no
-  color: $light-grey
-  background: $dark-grey
-  padding: 0 0 0 3px
-  width: 25px
-  
-tr:hover .no
-  color: $white
+// Source
+.source tr
+  pre
+    margin-left: 3px
 
-.count
-  background: $white
-  -webkit-border-radius: 4px
-  -webkit-border-top-left-radius: 0px
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2)
-  border: 1px solid black
-  display: block
-  padding: 3px
-  position: absolute
-  margin-top: -10px
-  margin-left: -15px
-  opacity: 0
-  
-tr:hover .count
-  opacity: 1
-  
+  .count
+    background: $white
+    -webkit-border-radius: 4px
+    -webkit-border-top-left-radius: 0px
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2)
+    border: 1px solid black
+    display: block
+    padding: 3px
+    position: absolute
+    margin-top: -10px
+    margin-left: -15px
+    opacity: 0
+    
+  .no
+    color: $light-grey
+    background: $dark-grey
+    padding: 0 0 0 3px
+    width: 25px
 
-tr pre
-  margin-left: 3px
-
-  .excluded 
+  &:hover 
+    .count
+      opacity: 1
+      
+    .no
+      color: $white
+      
+  // line colouring
+  &.excluded 
     background: $excluded
     &:hover
       background: darken($excluded, 10%)
     
-  .unran 
+  &.unran 
     background: $unran
     &:hover
       background: darken($unran, 10%)
     
-  .ran 
+  &.ran 
     background: $ran
     &:hover
       background: darken($ran, 10%)
