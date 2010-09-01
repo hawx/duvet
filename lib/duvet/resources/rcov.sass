@@ -95,8 +95,8 @@ td pre
     
     
   // Headers
-  .lines, .loc, .cov, .code
-    width: 110px
+  .lines, .loc, .ran, .cov, .code
+    width: 100px
     
 // Totals
 .totals
@@ -135,20 +135,20 @@ tr:hover .count
 tr pre
   margin-left: 3px
 
-.excluded 
-  background: $excluded
-  &:hover
-    background: darken($excluded, 10%)
-  
-.unran 
-  background: $unran
-  &:hover
-    background: darken($unran, 10%)
-  
-.ran 
-  background: $ran
-  &:hover
-    background: darken($ran, 10%)
+  .excluded 
+    background: $excluded
+    &:hover
+      background: darken($excluded, 10%)
+    
+  .unran 
+    background: $unran
+    &:hover
+      background: darken($unran, 10%)
+    
+  .ran 
+    background: $ran
+    &:hover
+      background: darken($ran, 10%)
     
     
 // Footer

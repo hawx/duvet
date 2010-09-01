@@ -1,6 +1,6 @@
 module Duvet
   class Cov
-    attr_accessor :cov, :path
+    attr_accessor :path
     
     def initialize(path, cov)
       if path.include?(Dir.pwd)
@@ -13,9 +13,9 @@ module Duvet
       write
     end
     
-    # @return [Integer] number of lines in file
+    # @return [Array] lines in file
     def lines
-      @cov.length
+      @cov
     end
     
     # @return [Array] all lines which can be executed
@@ -23,9 +23,9 @@ module Duvet
       @cov.reject {|i| i.nil?}
     end
     
-    # @return [Integer] number of lines of code that can be executed
-    def lines_of_code
-      code_lines.length
+    # @return [Array] all lines which have been ran
+    def ran_lines
+      @cov.reject {|i| i.nil? || i.zero?}
     end
     
     # Gives a fraction from 0 to 1 of how many lines of code have 
@@ -34,22 +34,20 @@ module Duvet
     #
     # @return [Integer] lines of code executed as a fraction
     def code_coverage
-      ran_lines = code_lines.reject {|i| i.zero?}.length
-      ran_lines.to_f / lines_of_code.to_f
+      ran_lines.size.to_f / code_lines.size.to_f
     end
-    
-    # @return [String] #code_coverage as ??.??%
-    def code_coverage_percent
-      "%.2f%" % (code_coverage*100)
-    end
-    
+
     # Similar to #code_coverage but counts all lines, executable
     # or not.
     #
     # @return [Integer] lines executed as a fraction
     def total_coverage
-      ran_lines = @cov.reject {|i| i.nil? || i.zero?}.length
-      ran_lines.to_f / lines.to_f
+      ran_lines.size.to_f / lines.size.to_f
+    end
+    
+    # @return [String] #code_coverage as ??.??%
+    def code_coverage_percent
+      "%.2f%" % (code_coverage*100)
     end
     
     # @return [String] #total_coverage as ??.??%
@@ -76,8 +74,8 @@ module Duvet
     # @return [String]
     def report
       str = "For #{@path}\n\n" << source_report << "\n"
-      str << "total coverage: #{total_coverage}\n"
-      str << "code coverage:  #{code_coverage}\n"
+      str << "total coverage: #{total_coverage_percent}\n"
+      str << "code coverage:  #{code_coverage_percent}\n"
       str
     end
     
@@ -88,13 +86,14 @@ module Duvet
           "path" => @path,
           "url" => @path.file_name + '.html',
           "source" => @path.readlines,
-          "lines" => lines,
-          "lines_code" => lines_of_code
+          "lines" => lines.size,
+          "lines_code" => code_lines.size,
+          "lines_ran" => ran_lines.size
         },
         "coverage" => {
           "code" => code_coverage_percent,
           "total" => total_coverage_percent,
-          "lines" => @cov
+          "lines" => lines
         }
       }
     end

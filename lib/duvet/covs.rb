@@ -25,26 +25,27 @@ module Duvet
     
     # @return [Integer]
     def total_lines
-      self.inject(0) {|a, e| a + e.cov.length }
+      self.inject(0) {|a, e| a + e.lines.size }
     end
     
     # @return [Integer]
     def total_code_lines
-      self.inject(0) {|a, e| a + e.lines_of_code }
+      self.inject(0) {|a, e| a + e.code_lines.size }
     end
     
-    # @return [String]
+    # @return [Integer]
+    def total_ran_lines
+      self.inject(0) {|a, e| a + e.ran_lines.size }
+    end
+    
+    # @return [String] total lines run / total lines, as percentage
     def total_total_cov
-      total_lines = self.map {|i| i.cov}.flatten
-      ran_lines = total_lines.reject {|i| i.nil? || i.zero?}
-      "%.2f%" % (ran_lines.size.to_f / total_lines.size.to_f*100)
+      "%.2f%" % (total_ran_lines.to_f / total_lines.to_f*100)
     end
     
-    # @return [String]
+    # @return [String] total lines run / total lines of code, as percentage
     def total_code_cov
-      total_lines = self.map {|i| i.code_lines}.flatten
-      ran_lines = total_lines.reject {|i| i.zero?}
-      "%.2f%" % (ran_lines.size.to_f / total_lines.size.to_f*100)
+      "%.2f%" % (total_ran_lines.to_f / total_code_lines.to_f*100)
     end
     
   # @endgroup
@@ -60,6 +61,7 @@ module Duvet
         'total' => {
           'lines' => total_lines,
           'lines_code' => total_code_lines,
+          'lines_ran' => total_ran_lines,
           'total_cov' => total_total_cov,
           'code_cov' => total_code_cov
         }
