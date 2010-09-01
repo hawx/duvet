@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/duvet",
+     "duvet.gemspec",
      "lib/duvet.rb",
      "lib/duvet/cov.rb",
      "lib/duvet/covs.rb",
