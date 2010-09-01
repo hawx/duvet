@@ -3,7 +3,12 @@ module Duvet
     attr_accessor :cov, :path
     
     def initialize(path, cov)
-      @path = path
+      if path.include?(Dir.pwd)
+        @path = path.to_p.relative_path_from(Pathname.pwd)
+      else
+        @path = path.to_p
+      end
+
       @cov = cov
       write
     end
@@ -13,9 +18,14 @@ module Duvet
       @cov.length
     end
     
+    # @return [Array] all lines which can be executed
+    def code_lines
+      @cov.reject {|i| i.nil?}
+    end
+    
     # @return [Integer] number of lines of code that can be executed
     def lines_of_code
-      @cov.reject {|i| i.nil?}.length
+      code_lines.length
     end
     
     # Gives a fraction from 0 to 1 of how many lines of code have 
@@ -24,10 +34,8 @@ module Duvet
     #
     # @return [Integer] lines of code executed as a fraction
     def code_coverage
-      c = @cov.reject {|i| i.nil?}
-      total_lines = c.length
-      ran_lines = c.reject {|i| i.zero?}.length
-      ran_lines.to_f / total_lines.to_f
+      ran_lines = code_lines.reject {|i| i.zero?}.length
+      ran_lines.to_f / lines_of_code.to_f
     end
     
     # @return [String] #code_coverage as ??.??%
@@ -40,9 +48,8 @@ module Duvet
     #
     # @return [Integer] lines executed as a fraction
     def total_coverage
-      total_lines = lines
       ran_lines = @cov.reject {|i| i.nil? || i.zero?}.length
-      ran_lines.to_f / total_lines.to_f
+      ran_lines.to_f / lines.to_f
     end
     
     # @return [String] #total_coverage as ??.??%
@@ -55,7 +62,7 @@ module Duvet
     # @return [String] a report showing line number, source and 
     #   times run
     def source_report
-      source = File.readlines(@path)
+      source = @path.readlines
       str = ""
       source.zip(@cov).each_with_index do |a, i|
         line, count = a[0], a[1]
@@ -79,8 +86,8 @@ module Duvet
       {
         "file" => {
           "path" => @path,
-          "url" => @path.to_p.file_name.to_s + '.html',
-          "source" => File.readlines(@path),
+          "url" => @path.file_name + '.html',
+          "source" => @path.readlines,
           "lines" => lines,
           "lines_code" => lines_of_code
         },
@@ -98,12 +105,12 @@ module Duvet
     # @return [String]
     def format
       template = File.read(File.join( File.dirname(__FILE__), "templates", "file.erb" ))
-      e = Erubis::Eruby.new(template).result(self.data)
+      e = Erubis::Eruby.new(template).result(Duvet.template_hash.merge(self.data))
       e
     end
     
     def write(dir='cov')
-      f = File.new( (dir.to_p + @path.to_p.file_name).to_s + '.html', "w" )
+      f = File.new((dir.to_p + @path.file_name).to_s + '.html', "w" )
       f.write(format)
     end
   

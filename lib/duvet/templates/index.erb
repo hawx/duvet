@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <title>Coverage</title>
     <link rel="stylesheet" href="styles.css" type="text/css" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="plugins.js"></script>
+    <script type="text/javascript" src="main.js"></script>
   </head>
   <body>
   
@@ -11,28 +14,20 @@
       <h1>Coverage</h1>
     </header>
     
+    <input id="filter" name="filter" type="text" placeholder="Filter">
+    
     <div class="table-wrapper">
       <table class="summary" border="none">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Total Lines</th>
-            <th>Lines of Code</th>
-            <th>Total Coverage</th>
-            <th>Code Coverage</th>
+            <th class="name">Name</th>
+            <th class="lines">Total Lines</th>
+            <th class="loc">Lines of Code</th>
+            <th class="cov">Total Coverage</th>
+            <th class="code">Code Coverage</th>
           </tr>
         </thead>
-        <tbody>
-          <% files.each do |f| %>
-          <tr>
-            <td><a href="<%= f['file']['url'] %>"><%= f['file']['path'] %></a></td>
-            <td><%= f['file']['lines'] %></td>
-            <td><%= f['file']['lines_code'] %></td>
-            <td><%= f['coverage']['total'] %></td>
-            <td><%= f['coverage']['code'] %></td>
-          </tr>
-          <% end %>
-          
+        <tfoot>
           <tr class="totals">
             <td>Total</td>
             <td><%= total['lines'] %></td>
@@ -40,8 +35,24 @@
             <td><%= total['total_cov'] %></td>
             <td><%= total['code_cov'] %></td>
           </tr>
+        </tfoot>
+        <tbody>
+          <% files.each do |f| %>
+          <tr>
+            <td class="name"><a href="<%= f['file']['url'] %>"><%= f['file']['path'] %></a></td>
+            <td><%= f['file']['lines'] %></td>
+            <td><%= f['file']['lines_code'] %></td>
+            <td><%= f['coverage']['total'] %></td>
+            <td><%= f['coverage']['code'] %></td>
+          </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
+    
+    <footer>
+      <span>Generated on <%= time %> with </span><a href="http://github.com/hawx/duvet"><%= name %> <%= version %></a>
+    </footer>
+    
   </body>
 </html>

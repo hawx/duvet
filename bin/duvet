@@ -28,6 +28,10 @@ c = Clive.new do
     opts[:dir] = i
   end
   
+  flag(:f, :filter, "FILTER", "Use a filter to see only needed results") do |i|
+    opts[:filter] = i
+  end
+  
 end
 
 # Start coverage, then require paths

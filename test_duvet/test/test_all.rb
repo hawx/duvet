@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
 require 'duvet'
-Duvet.start({:dir => 'test_duvet/cov', :filter => 'test_duvet/'})
+Duvet.start({:dir => 'test_duvet/cov', :filter => 'test_duvet/lib/'})
 
 
 require 'rubygems'

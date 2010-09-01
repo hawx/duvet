@@ -8,10 +8,13 @@ $excluded: #e0dedb
 $unran: #ce8b8c
 $ran: #bed2be
 
-
+// Main
 body
   background: #f4f2ed
   font: 12px/1.3em Helvetica
+
+a
+  text-decoration: none
 
 
 // Header
@@ -20,13 +23,24 @@ header
   
   h1, h1 a
     color: $dark-grey
-    text-decoration: none
     
   h2
     color: lighten($dark-grey, 40%)
     font-size: 16px
 
-
+// Filter/Search Box
+#filter
+  position: absolute
+  top: 20px
+  right: 8px
+  border: 1px solid black
+  background: #eee
+  -webkit-border-radius: 5px
+  padding: 3px
+  
+  &:focus
+    border: 1px solid transparent
+    
 
 // Table
 .table-wrapper
@@ -51,6 +65,11 @@ td pre
   margin-bottom: 1em
   background: $excluded
   
+  tbody
+    .name, .name a
+      color: $text
+      font-weight: bold
+  
   tbody tr:hover 
     background: darken($excluded, 10%)
 
@@ -64,11 +83,26 @@ td pre
   th, td
     padding: .5em
     
+  .header::after
+    font-size: 10px
+    margin-left: 10px  
+    
+  .descending::after
+    content: '▼'
+    
+  .ascending::after
+    content: '▲'
+    
+    
+  // Headers
+  .lines, .loc, .cov, .code
+    width: 110px
     
 // Totals
 .totals
   border-top: 1px solid black
   background: darken($excluded, 10%)
+  font-weight: bold
   
   
 // Source  
@@ -115,5 +149,13 @@ tr pre
   background: $ran
   &:hover
     background: darken($ran, 10%)
+    
+    
+// Footer
+footer
+  color: rgba(0, 0, 0, .6)
+  
+  a
+    color: rgb(0, 0, 0)
     
     

@@ -33,14 +33,18 @@ module Duvet
       self.inject(0) {|a, e| a + e.lines_of_code }
     end
     
-    # @return [Integer]
+    # @return [String]
     def total_total_cov
-      "%.2f%" % (self.inject(0) {|a, e| a + e.total_coverage*100 } / self.size)
+      total_lines = self.map {|i| i.cov}.flatten
+      ran_lines = total_lines.reject {|i| i.nil? || i.zero?}
+      "%.2f%" % (ran_lines.size.to_f / total_lines.size.to_f*100)
     end
     
-    # @return [Integer]
+    # @return [String]
     def total_code_cov
-      "%.2f%" % (self.inject(0) {|a, e| a + e.code_coverage*100 } / self.size)
+      total_lines = self.map {|i| i.code_lines}.flatten
+      ran_lines = total_lines.reject {|i| i.zero?}
+      "%.2f%" % (ran_lines.size.to_f / total_lines.size.to_f*100)
     end
     
   # @endgroup
@@ -64,7 +68,7 @@ module Duvet
     
     def format(dir='cov')
       template = File.read(File.join( File.dirname(__FILE__), "templates", "index.erb" ))
-      e = Erubis::Eruby.new(template).result(self.data)
+      e = Erubis::Eruby.new(template).result(Duvet.template_hash.merge(self.data))
       e
     end
     
@@ -78,19 +82,36 @@ module Duvet
         self.each do |i|
           i.write(dir)
         end
-        write_styles(dir, style)
+        write_resources(dir, style)
       else
-        p "no files"
+        warn "no files"
       end
     end
-    
-    def write_styles(dir='cov', style='rcov')
-      @styles = {'rcov' => File.dirname(__FILE__) + '/styles/rcov.sass'}
-      write_path = dir.to_p + 'styles.css'
+
+    # @todo Allow you to change style used
+    def write_resources(dir, style)
+      __DIR__ = File.dirname(__FILE__)
+      res = {"#{__DIR__}/resources/jquery.js" => dir.to_p + 'jquery.js',
+             "#{__DIR__}/resources/main.js" => dir.to_p + 'main.js'}
+             
+      dirs = Dir.glob("#{__DIR__}/resources/*")
+      js = dirs.find_all {|i| i[-2..-1] == 'js'}
+      sass = dirs.find_all {|i| i[-4..-1] == 'sass'}
       
-      f = File.new(write_path, "w")
-      template = File.read(@styles[style])
-      f.write(Sass::Engine.new(template).render)
+      js.each do |i|
+        write_path = dir.to_p + i.to_p.basename
+        f = File.new(write_path, "w")
+        f.write(File.read(i))
+      end
+      
+      sass.each do |i|
+        if i.include?(style)
+          write_path = dir.to_p + 'styles.css'
+          f = File.new(write_path, "w")
+          f.write Sass::Engine.new( File.read(i) ).render
+        end
+      end
+
     end
   
   end
