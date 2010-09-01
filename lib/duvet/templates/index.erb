@@ -30,20 +30,20 @@
         <tfoot>
           <tr class="totals">
             <td>Total</td>
-            <td><%= total['lines'] %></td>
-            <td><%= total['lines_code'] %></td>
-            <td><%= total['total_cov'] %></td>
-            <td><%= total['code_cov'] %></td>
+            <td class="lines"><%= total['lines'] %></td>
+            <td class="loc"><%= total['lines_code'] %></td>
+            <td class="cov"><%= total['total_cov'] %></td>
+            <td class="code"><%= total['code_cov'] %></td>
           </tr>
         </tfoot>
         <tbody>
           <% files.each do |f| %>
           <tr>
             <td class="name"><a href="<%= f['file']['url'] %>"><%= f['file']['path'] %></a></td>
-            <td><%= f['file']['lines'] %></td>
-            <td><%= f['file']['lines_code'] %></td>
-            <td><%= f['coverage']['total'] %></td>
-            <td><%= f['coverage']['code'] %></td>
+            <td class="lines"><%= f['file']['lines'] %></td>
+            <td class="loc"><%= f['file']['lines_code'] %></td>
+            <td class="cov"><%= f['coverage']['total'] %></td>
+            <td class="code"><%= f['coverage']['code'] %></td>
           </tr>
           <% end %>
         </tbody>

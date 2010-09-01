@@ -38,7 +38,6 @@ Gem::Specification.new do |s|
      "lib/duvet/templates/file.erb",
      "lib/duvet/templates/index.erb",
      "test/helper.rb",
-     "test/test_class.rb",
      "test/test_duvet.rb",
      "test_duvet/lib/klass.rb",
      "test_duvet/lib/run.rb",
@@ -51,7 +50,6 @@ Gem::Specification.new do |s|
   s.summary = %q{Duvet a simple code coverage tool for 1.9}
   s.test_files = [
     "test/helper.rb",
-     "test/test_class.rb",
      "test/test_duvet.rb"
   ]
 
