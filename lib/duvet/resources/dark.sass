@@ -1,0 +1,166 @@
+$text: #ddd
+
+$black: #222
+$dark-grey: #111
+$light-grey: #ccc
+$white: #ddd
+
+$excluded: #bbb
+$unran: #ce5256
+$ran: #8dd291
+
+// Main
+body
+  background: $black
+  color: $white
+  font: 12px/1.3em Helvetica
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .5)
+
+a
+  text-decoration: none
+
+
+// Header
+header
+  margin: 2em .5em
+  
+  h1, h1 a
+    color: $light-grey
+    font-weight: normal
+    
+  h2
+    color: darken($light-grey, 20%)
+    font-size: 16px
+    font-weight: normal
+
+// Filter/Search Box
+#filter
+  position: absolute
+  color: $white
+  top: 20px
+  right: 8px
+  border: 1px solid darken($light-grey, 50%)
+  background: $black
+  -webkit-border-radius: 5px
+  padding: 3px
+    
+
+// Table
+.table-wrapper
+  min-width: 700px
+
+table
+  border: 1px solid darken($light-grey, 50%)
+  background: $dark-grey
+  border-collapse: collapse
+  width: 100%
+  margin-bottom: 1em
+
+table.source, pre, code
+  font: 11px/1.2em Menlo
+
+td pre
+  margin: 0
+
+
+// Summary
+.summary
+  margin-bottom: 1em
+  background: lighten($dark-grey, 10%)
+  
+  tbody
+    .name, .name a
+      color: $text
+  
+  tbody tr:hover 
+    background: lighten($dark-grey, 15%)
+
+  thead
+    background: $dark-grey
+    color: $light-grey
+    border-bottom: 1px solid darken($light-grey, 50%)
+
+  tr
+    text-align: left
+
+  th, td
+    padding: .5em
+    
+  .header::after
+    font-size: 10px
+    margin-left: 10px  
+    
+  .descending::after
+    content: '▼'
+    
+  .ascending::after
+    content: '▲'
+    
+  .lines, .loc, .ran, .cov, .code
+    width: 100px
+    
+// Totals
+.totals
+  border-top: 1px solid darken($light-grey, 50%)
+  background: darken($dark-grey, 10%)
+  font-weight: bold
+  
+  
+// Source
+.source tr
+  pre
+    margin-left: 3px
+
+  .count
+    background: $black
+    color: $white
+    -webkit-border-radius: 4px
+    -webkit-border-top-left-radius: 0px
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2)
+    border: 1px solid $dark-grey
+    display: block
+    padding: 3px
+    position: absolute
+    margin-top: -10px
+    margin-left: -15px
+    opacity: 0
+    
+  .no
+    color: $light-grey
+    background: $dark-grey
+    padding: 0 0 0 3px
+    width: 25px
+    border-right: 1px solid darken($light-grey, 50%)
+
+  &:hover 
+    .count
+      opacity: 1
+      
+    .no
+      color: $white
+      
+  // line colouring
+  &.excluded 
+    color: $excluded
+    &:hover
+      background: darken($excluded, 55%)
+    
+  &.unran 
+    color: $unran
+    &:hover
+      background: darken($unran, 40%)
+    
+  &.ran 
+    color: $ran
+    &:hover
+      background: darken($ran, 55%)
+    
+    
+// Footer
+footer
+  color: fade-out($white, .4)
+  
+  a
+    color: $white
+    
+    
