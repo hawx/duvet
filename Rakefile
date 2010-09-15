@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "duvet"
-    gem.summary = %Q{Duvet a simple code coverage tool for 1.9}
-    gem.description = %Q{Duvet a simple code coverage tool for 1.9}
+    gem.summary = %Q{Duvet a simple code coverage tool for ruby 1.9}
+    gem.description = %Q{Duvet a simple code coverage tool for ruby 1.9}
     gem.email = "m@hawx.me"
     gem.homepage = "http://github.com/hawx/duvet"
     gem.authors = ["Joshua Hawxwell"]
