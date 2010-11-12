@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{duvet}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Hawxwell"]
-  s.date = %q{2010-09-15}
+  s.date = %q{2010-11-12}
   s.default_executable = %q{duvet}
-  s.description = %q{Duvet a simple code coverage tool for 1.9}
+  s.description = %q{Duvet a simple code coverage tool for ruby 1.9}
   s.email = %q{m@hawx.me}
   s.executables = ["duvet"]
   s.extra_rdoc_files = [
@@ -31,14 +31,14 @@ Gem::Specification.new do |s|
      "lib/duvet/cov.rb",
      "lib/duvet/covs.rb",
      "lib/duvet/ext.rb",
-     "lib/duvet/resources/dark.sass",
-     "lib/duvet/resources/jquery.js",
-     "lib/duvet/resources/light.sass",
-     "lib/duvet/resources/main.js",
-     "lib/duvet/resources/plugins.js",
-     "lib/duvet/resources/rcov.sass",
-     "lib/duvet/templates/file.erb",
-     "lib/duvet/templates/index.erb",
+     "templates/css/dark.sass",
+     "templates/css/light.sass",
+     "templates/css/rcov.sass",
+     "templates/html/file.haml",
+     "templates/html/index.haml",
+     "templates/js/jquery.js",
+     "templates/js/main.js",
+     "templates/js/plugins.js",
      "test/helper.rb",
      "test/test_duvet.rb",
      "test_duvet/lib/klass.rb",
@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Duvet a simple code coverage tool for 1.9}
+  s.summary = %q{Duvet a simple code coverage tool for ruby 1.9}
   s.test_files = [
     "test/helper.rb",
      "test/test_duvet.rb"
