@@ -2,9 +2,9 @@ module Duvet
   class Covs < Array
   
     def initialize(cov)
-      replace []
-      cov.each do |p, c|
-        self << Cov.new(p, c)
+      self.replace []
+      cov.each do |path, c|
+        self << Cov.new(path, c)
       end
     end
   
@@ -69,9 +69,10 @@ module Duvet
     end
     
     def format(dir='cov')
-      template = File.read(File.join( File.dirname(__FILE__), "templates", "index.erb" ))
-      e = Erubis::Eruby.new(template).result(Duvet.template_hash.merge(self.data))
-      e
+      template = File.read File.join(TEMPLATE_PATH, 'html', 'index.haml')
+      haml_engine = Haml::Engine.new(template)
+      output = haml_engine.render(nil, Duvet.template_hash.merge(self.data))
+      output
     end
     
     def write(dir='cov', style='rcov')
@@ -92,22 +93,21 @@ module Duvet
 
     # @todo Allow you to change style used
     def write_resources(dir, style)
-      dirs = Dir.glob("#{File.dirname(__FILE__)}/resources/*")
-      js = dirs.find_all {|i| i[-2..-1] == 'js'}
-      sass = dirs.find_all {|i| i[-4..-1] == 'sass'}
-      
-      js.each do |i|
-        write_path = dir.to_p + i.to_p.basename
-        f = File.new(write_path, "w")
-        f.write(File.read(i))
-      end
-      
-      sass.each do |i|
+      js_dir = File.join(TEMPLATE_PATH, 'js')
+      css_dir = File.join(TEMPLATE_PATH, 'css')
+    
+      Dir.glob("#{css_dir}/*").each do |i|
         if i.include?(style)
           write_path = dir.to_p + 'styles.css'
           f = File.new(write_path, "w")
           f.write Sass::Engine.new( File.read(i) ).render
         end
+      end
+      
+      Dir.glob("#{js_dir}/*").each do |i|
+        write_path = dir.to_p + i.to_p.basename
+        f = File.new(write_path, "w")
+        f.write(File.read(i))
       end
 
     end

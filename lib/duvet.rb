@@ -1,4 +1,4 @@
-$:.unshift File.dirname(__FILE__)
+$: << File.join(File.dirname(__FILE__), '..')
 
 # Add this to test/helper.rb at the before __anything__ else
 #
@@ -9,6 +9,7 @@ require 'coverage'
 require 'ostruct'
 require 'erubis'
 require 'pathname'
+require 'haml'
 require 'sass'
 
 require 'duvet/ext'
@@ -21,6 +22,8 @@ module Duvet
   attr_accessor :opts
   
   DEFAULTS = {:dir => 'cov', :style => 'rcov'}
+  
+  TEMPLATE_PATH = File.join File.dirname(__FILE__), '..', 'templates'
 
   # Start tracking
   def self.start(opts={})

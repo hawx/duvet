@@ -3,14 +3,14 @@ module Duvet
     attr_accessor :path
     
     def initialize(path, cov)
-      if path.include?(Dir.pwd)
-        @path = path.to_p.relative_path_from(Pathname.pwd)
-      else
-        @path = path.to_p
+      @path = Pathname.new(path)
+      if @path.to_s.include?(Dir.pwd)
+        a = Dir.pwd.size+1
+        @path = Pathname.new(path[a..-1])
+        #@path = @path.relative_path_from(Pathname.getwd)
       end
-
+      
       @cov = cov
-      write
     end
     
     # @return [Array] lines in file
@@ -83,7 +83,7 @@ module Duvet
     def data
       {
         "file" => {
-          "path" => @path,
+          "path" => @path.to_s,
           "url" => @path.file_name + '.html',
           "source" => @path.readlines,
           "lines" => lines.size,
@@ -103,14 +103,16 @@ module Duvet
     #
     # @return [String]
     def format
-      template = File.read(File.join( File.dirname(__FILE__), "templates", "file.erb" ))
-      e = Erubis::Eruby.new(template).result(Duvet.template_hash.merge(self.data))
-      e
+      template = File.read File.join(TEMPLATE_PATH, 'html', 'file.haml')
+      haml_engine = Haml::Engine.new(template)
+      output = haml_engine.render(nil, Duvet.template_hash.merge(self.data))
+      output
     end
     
     def write(dir='cov')
-      f = File.new((dir.to_p + @path.file_name).to_s + '.html', "w" )
-      f.write(format)
+      pa = (dir.to_p + @path.file_name).to_s + '.html'
+      File.new(pa, 'w')
+      File.open(pa, 'w') {|f| f.puts(self.format) }
     end
   
   end
