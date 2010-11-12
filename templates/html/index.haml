@@ -1,0 +1,52 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %title Coverage
+    %link{:rel => "stylesheet", :href => "styles.css"}
+    %script{:type => "text/javascript", :src => "jquery.js"}
+    %script{:type => "text/javascript", :src => "plugins.js"}
+    %script{:type => "text/javascript", :src => "main.js"}
+    
+  %body
+    %header
+      %h1 Coverage
+      
+    %input{:id => "filter", :name => "filter", :type => "text", :placeholder => "Filter"}
+      
+    .table-wrapper
+      %table{:class => "summary sort", :border => "none"}
+        %thead
+          %tr
+            %th{:class => "name"} Name
+            %th{:class => "lines"} Total Lines
+            %th{:class => "loc"} Lines of Code
+            %th{:class => "cov"} Total Coverage
+            %th{:class => "code"} Code Coverage
+          
+        %tfoot
+          %tr{:class => "totals"}
+            %td Total
+            %td{:class => "lines"}= total['lines']
+            %td{:class => "loc"}= total['lines_code']
+            %td{:class => "ran"}= total['lines_ran']
+            %td{:class => "cov"}= total['total_cov']
+            %td{:class => "code"}= total['code_cov']
+          
+        %tbody
+          - files.each do |f|
+            %tr
+              %td{:class => "name"}
+                %a{:href => "#{f['file']['url']}"}= f['file']['path']
+                
+              %td{:class => "lines"}= f['file']['lines']
+              %td{:class => "loc"}= f['file']['lines_code']
+              %td{:class => "ran"}= f['file']['lines_ran']
+              %td{:class => "cov"}= f['coverage']['total']
+              %td{:class => "code"}= f['coverage']['code']
+                
+    %footer
+      %span
+        Generated on #{time} with
+        %a{:href => "http://github.com/hawx/duvet"}= "#{name} #{version}"
+              
