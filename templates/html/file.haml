@@ -21,6 +21,7 @@
             %th Name
             %th Total Lines
             %th Lines of Code
+            %th Lines Ran
             %th Total Coverage
             %th Code Coverage
           
@@ -29,6 +30,7 @@
             %td{:class => "name"}= file['path']
             %td= file['lines']
             %td= file['lines_code']
+            %td= file['lines_ran']
             %td= coverage['total']
             %td= coverage['code']
           
