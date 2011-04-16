@@ -7,7 +7,6 @@ $: << File.join(File.dirname(__FILE__), '..')
 #
 require 'coverage'
 require 'ostruct'
-require 'erubis'
 require 'pathname'
 require 'haml'
 require 'sass'
