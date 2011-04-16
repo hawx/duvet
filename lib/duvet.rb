@@ -14,6 +14,7 @@ require 'sass'
 require 'duvet/ext'
 require 'duvet/covs'
 require 'duvet/cov'
+require 'duvet/version'
 
 
 module Duvet
@@ -69,7 +70,7 @@ module Duvet
   def self.template_hash
     {
       'time' => Time.now,
-      'version' => self.version,
+      'version' => VERSION,
       'name' => 'duvet'
     }
   end
