@@ -41,26 +41,21 @@
             %tr{:class => "excluded"}
               %td{:class => "no"}= i
               %td
-                %pre
-                  %code= line.gsub("\n", "")
+                %pre 
+                  %code
+                    #{line}
   
-          - elsif count.zero?
-            %tr{:class => "unran"}
-              %td{:class => "no"}= i
-              %td
-                %pre
-                  %code= line.gsub("\n", "")
-              %td
-                %span{:class => "count"}= count
-                  
           - else
-            %tr{:class => "ran"}
+            %tr{:class => (count.zero? ? "unran" : "ran") }
+              
               %td{:class => "no"}= i
               %td
                 %pre
-                  %code= line.gsub("\n", "")
-              %td
-                %span{:class => "count"}= count
+                  %code
+                    #{line}
+  
+                %td
+                  %span{:class => "count"}= count
             
             
                 

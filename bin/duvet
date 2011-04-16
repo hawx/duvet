@@ -12,27 +12,33 @@ require 'clive'
 require 'duvet'
 
 opts = {:dir => 'cov', :style => 'rcov'}
-c = Clive.new do
+
+class CLI
+  include Clive::Parser
+  option_hash :opts
   
-  header "Usage: duvet [options] [paths]"
-  
-  flag(:css, "PATH", "Use custom css file") do |i| 
+  desc 'Use custom css file'
+  flag :c, :css, :arg => 'path' do |i|
     opts[:css] = i
   end
   
-  flag(:s, :style, "ARG", "Choose style") do |i|
+  desc 'Choose style'
+  flag :s, :style, :args => %w(rcov dark light) do |i|
     opts[:style] = i
   end
   
-  flag(:d, :dir, "PATH", "Directory to write coverage results") do |i|
+  desc 'Directory to write coverage results to'
+  flag :d, :dir, :arg => 'path' do |i|
     opts[:dir] = i
   end
   
-  flag(:f, :filter, "FILTER", "Use a filter to see only needed results") do |i|
+  desc 'Use a filter to see only needed results'
+  flag :f, :filter, :arg => "string" do |i|
     opts[:filter] = i
   end
-  
 end
+
+
 
 # Start coverage, then require paths
 def run(paths, opts)
@@ -42,5 +48,5 @@ def run(paths, opts)
   end
 end
 
-args = c.parse(ARGV)
-run(args, opts)
+args = CLI.parse(ARGV)
+run(args, opts.merge(CLI.opts))
