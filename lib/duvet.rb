@@ -65,13 +65,6 @@ module Duvet
     @running
   end
   
-  # Reads the current version from VERSION
-  #
-  # @return [String] current version
-  def self.version
-    File.read( File.join(File.dirname(__FILE__), '..', 'VERSION') )
-  end
-  
   # @return [Hash] hash to merge for templating
   def self.template_hash
     {
