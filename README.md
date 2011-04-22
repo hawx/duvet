@@ -16,10 +16,12 @@ You can change the defaults by passing an options hash to Duvet.start, eg
 `:dir` is the directory to write the coverage to.
 `:filter` allows you to display only coverage for files that include the string.
 
+You can see what the output of running duvet on itself is [here](http://hawx.github.com/duvet).
+
 
 ## Credits
 
-This gem was created because I read this blog post http://engineering.attinteractive.com/2010/08/code-coverage-in-ruby-1-9/.
+This gem was created because I read this blog post <http://engineering.attinteractive.com/2010/08/code-coverage-in-ruby-1-9/>.
 
 ## Copyright
 
