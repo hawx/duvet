@@ -14,7 +14,8 @@ You can change the defaults by passing an options hash to Duvet.start, eg
     Duvet.start :dir => 'coverage', :filter => 'app/lib'
 
 `:dir` is the directory to write the coverage to.
-`:filter` allows you to display only coverage for files that include the string.
+`:filter` allows you to display only coverage for files that include the string, or you can
+match against a regular expression for more control.
 
 You can see what the output of running duvet on itself is [here](http://hawx.github.com/duvet).
 

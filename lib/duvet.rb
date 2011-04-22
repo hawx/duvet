@@ -1,12 +1,10 @@
-$: << File.join(File.dirname(__FILE__), '..')
-
 # Add this to test/helper.rb at the before __anything__ else
 #
 #   require 'duvet'
 #   Duvet.start
 #
+
 require 'coverage'
-require 'ostruct'
 require 'pathname'
 require 'haml'
 require 'sass'
@@ -43,8 +41,9 @@ module Duvet
     cov = Coverage.result if running?
     if @opts[:filter]
       filtered = {}
+      @opts[:filter] = /#{@opts[:filter]}/ unless @opts[:filter].is_a?(Regexp)
       cov.each do |k, v|
-        if k.include?(@opts[:filter])
+        if @opts[:filter] =~ k
           filtered[k] = v
         end
       end
