@@ -22,7 +22,13 @@ module Duvet
   
   DEFAULTS = {:dir => 'cov', :style => 'rcov'}
   
-  TEMPLATE_PATH = File.join File.dirname(__FILE__), '..', 'templates'
+  TEMPLATE_PATH = Pathname.new(__FILE__).dirname + '..' + 'templates'
+  
+  TEMPLATE_HASH = {
+    'time' => Time.now,
+    'version' => VERSION,
+    'name' => 'duvet'
+  }
 
   # Start tracking
   def self.start(opts={})
@@ -51,7 +57,7 @@ module Duvet
   
   # Write results
   def self.write
-    self.result.write(@opts[:dir], @opts[:style]) if running?
+    self.result.write(Pathname.new(@opts[:dir])) if running?
   end
   
   # Proc to call when exiting
@@ -63,15 +69,6 @@ module Duvet
   # @return [Boolean] whether coverage is running
   def self.running?
     @running
-  end
-  
-  # @return [Hash] hash to merge for templating
-  def self.template_hash
-    {
-      'time' => Time.now,
-      'version' => VERSION,
-      'name' => 'duvet'
-    }
   end
 
 end

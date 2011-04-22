@@ -15,14 +15,3 @@ class Pathname
   end
 
 end
-
-class String
-  
-  # Converts the String to a Pathname object
-  #  
-  # @return [Pathname]
-  def to_p
-    Pathname.new(self)    
-  end
-  
-end

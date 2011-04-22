@@ -1,9 +1,7 @@
 $(document).ready(function() {
-
-  t = $('table.sort');
   
   $('#filter').keyup(function() {
-    $.uiTableFilter(t, this.value);
+    $.uiTableFilter($('table.sort'), this.value);
     calculate_totals();
   });
   
@@ -17,7 +15,7 @@ $(document).ready(function() {
   
   // Need to get the cov and code totals to be weighted, if possible, to
   // the number of lines as in the ruby.
-  function calculate_totals(col) {
+  function calculate_totals() {
     var sum = 0;
     var rows = [];
     
@@ -52,5 +50,7 @@ $(document).ready(function() {
       $('table.sort tfoot td.code').text('0.00%');
     }
   }
+  
+  calculate_totals();
 
 });

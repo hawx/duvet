@@ -28,11 +28,11 @@
         %tfoot
           %tr{:class => "totals"}
             %td Total
-            %td{:class => "lines"}= total['lines']
-            %td{:class => "loc"}= total['lines_code']
-            %td{:class => "ran"}= total['lines_ran']
-            %td{:class => "cov"}= total['total_cov']
-            %td{:class => "code"}= total['code_cov']
+            %td{:class => "lines"}
+            %td{:class => "loc"}
+            %td{:class => "ran"}
+            %td{:class => "cov"}
+            %td{:class => "code"}
           
         %tbody
           - files.each do |f|

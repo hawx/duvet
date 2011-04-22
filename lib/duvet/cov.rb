@@ -91,14 +91,13 @@ module Duvet
     def format
       template = File.read File.join(TEMPLATE_PATH, 'html', 'file.haml')
       haml_engine = Haml::Engine.new(template)
-      output = haml_engine.render(nil, Duvet.template_hash.merge(self.data))
+      output = haml_engine.render(nil, TEMPLATE_HASH.merge(self.data))
       output
     end
     
-    def write(dir='cov')
-      pa = (dir.to_p + @path.file_name).to_s + '.html'
-      File.new(pa, 'w')
-      File.open(pa, 'w') {|f| f.puts(self.format) }
+    def write(dir)
+      path = (dir + @path.file_name).to_s + '.html'
+      File.open(path, 'w') {|f| f.write(self.format) }
     end
   
   end
