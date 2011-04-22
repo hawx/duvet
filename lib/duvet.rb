@@ -11,11 +11,10 @@ require 'pathname'
 require 'haml'
 require 'sass'
 
-require 'duvet/ext'
+require 'duvet/core_ext'
 require 'duvet/covs'
 require 'duvet/cov'
 require 'duvet/version'
-
 
 module Duvet
 
@@ -28,7 +27,7 @@ module Duvet
   # Start tracking
   def self.start(opts={})
     @opts = DEFAULTS.merge(opts)
-  
+    
     Coverage.start
     @running = true
   end

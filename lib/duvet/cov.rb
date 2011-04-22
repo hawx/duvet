@@ -5,7 +5,7 @@ module Duvet
     def initialize(path, cov)
       @path = Pathname.new(path)
       if @path.to_s.include?(Dir.pwd)
-        a = Dir.pwd.size+1
+        a = Dir.pwd.size + 1
         @path = Pathname.new(path[a..-1])
         #@path = @path.relative_path_from(Pathname.getwd)
       end
@@ -32,8 +32,9 @@ module Duvet
     # been executed. It ignores all lines that couldn't be executed
     # such as comments.
     #
-    # @return [Integer] lines of code executed as a fraction
+    # @return [Float] lines of code executed as a fraction
     def code_coverage
+      return 0.0 if code_lines.size.zero?
       ran_lines.size.to_f / code_lines.size.to_f
     end
 
@@ -42,6 +43,7 @@ module Duvet
     #
     # @return [Integer] lines executed as a fraction
     def total_coverage
+      return 0.0 if lines.size.zero?
       ran_lines.size.to_f / lines.size.to_f
     end
     
@@ -55,27 +57,11 @@ module Duvet
       "%.2f%" % (total_coverage*100)
     end
     
-    # Creates a report showing the source code.
-    #
-    # @return [String] a report showing line number, source and 
-    #   times run
-    def source_report
-      source = @path.readlines
-      str = ""
-      source.zip(@cov).each_with_index do |a, i|
-        line, count = a[0], a[1]
-        str << "#{i}| #{line.gsub("\n", "")}"
-        str << " #=> #{count}" if count
-        str << "\n"
-      end
-      str
-    end
-    
     # @return [String]
     def report
-      str = "For #{@path}\n\n" << source_report << "\n"
-      str << "total coverage: #{total_coverage_percent}\n"
-      str << "code coverage:  #{code_coverage_percent}\n"
+      str = "#{@path}\n"
+      str << "  total: #{total_coverage_percent}\n"
+      str << "  code:  #{code_coverage_percent}\n\n"
       str
     end
     
