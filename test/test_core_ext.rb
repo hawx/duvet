@@ -11,11 +11,3 @@ class TestPathname < MiniTest::Unit::TestCase
   end
 
 end
-
-class TestString < MiniTest::Unit::TestCase
-
-  def test_converts_to_pathname
-    assert_equal Pathname, 'string'.to_p.class
-  end
-
-end

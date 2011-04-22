@@ -11,7 +11,7 @@ class TestDuvet < MiniTest::Unit::TestCase
   end
   
   def test_has_template_path
-    assert Duvet::TEMPLATE_PATH.include?('../templates')
+    assert Duvet::TEMPLATE_PATH.to_s.include?('duvet/templates')
   end
 
 end
