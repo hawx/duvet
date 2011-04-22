@@ -9,9 +9,15 @@ $unran: #ce8b8c
 $ran: #bed2be
 
 // Main
+html
+  margin: 0
+  padding: 0
+  width: 100%
+
 body
   background: #f4f2ed
   font: 12px/1.3em Helvetica
+  margin: 8px
 
 a
   text-decoration: none
@@ -20,6 +26,7 @@ a
 // Header
 header
   margin: 2em .5em
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .5)
   
   h1, h1 a
     color: $dark-grey
@@ -33,13 +40,18 @@ header
   position: absolute
   top: 20px
   right: 8px
-  border: 1px solid black
-  background: #eee
-  -webkit-border-radius: 5px
-  padding: 3px
+  border: 1px solid rgb(120, 120, 120)
+  background: rgb(240, 240, 240)
+  -webkit-border-radius: 3px
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, .1), 0 1px 0 white
+  -webkit-transition: all .2s
+  padding: 4px
+  width: 180px
   
   &:focus
-    border: 1px solid transparent
+    outline: none
+    background: rgb(244, 244, 244)
+    border: 1px solid rgb(100, 100, 100)
     
 
 // Table
@@ -48,10 +60,11 @@ header
 
 table
   border: 1px solid grey
-  background: $light-grey
+  background: $excluded
   border-collapse: collapse
   width: 100%
   margin-bottom: 1em
+  -webkit-box-shadow: 0 1px 0 white
 
 table.source, pre, code
   font: 11px/1.2em Menlo
@@ -76,6 +89,9 @@ td pre
   thead
     background: $dark-grey
     color: $light-grey
+    
+    th
+      cursor: pointer
 
   tr
     text-align: left
@@ -98,7 +114,7 @@ td pre
     
 // Totals
 .totals
-  border-top: 1px solid black
+  border-top: 1px solid grey
   background: darken($excluded, 10%)
   font-weight: bold
   
@@ -154,6 +170,7 @@ td pre
 // Footer
 footer
   color: rgba(0, 0, 0, .6)
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .5)
   
   a
     color: rgb(0, 0, 0)

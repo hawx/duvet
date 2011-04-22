@@ -12,7 +12,7 @@
     %header
       %h1 Coverage
       
-    %input{:id => "filter", :name => "filter", :type => "text", :placeholder => "Filter"}
+    %input{:id => "filter", :name => "filter", :type => "text", :placeholder => "Filter..."}
       
     .table-wrapper
       %table{:class => "summary sort", :border => "none"}
@@ -48,6 +48,6 @@
                 
     %footer
       %span
-        Generated on #{time} with
+        Generated at #{time} with
         %a{:href => "http://github.com/hawx/duvet"}= "#{name} #{version}"
               
