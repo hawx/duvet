@@ -1,14 +1,14 @@
 $: << File.dirname(__FILE__)
 
-# By requiring the test helper coverage can be generated for duvet itself
-require_relative '../lib/duvet/test_helper.rb'
-Duvet.start :filter => 'lib/duvet'
+# Make sure to start coverage so that it generates it for itself
+require 'coverage'
+Coverage.start
+
 require_relative '../lib/duvet'
+Duvet.start :filter => 'lib/duvet'
 
-require 'rubygems'
-require 'test/unit'
-require 'shoulda'
+require 'minitest/mock'
+require 'minitest/pride'
 
-class Test::Unit::TestCase
+MiniTest::Unit.autorun
 
-end
