@@ -1,22 +1,21 @@
-require 'helper'
+require_relative 'helper'
 
-class TestString < Test::Unit::TestCase
+class TestPathname < MiniTest::Unit::TestCase
 
-  should "convert from String to Pathname" do
-    assert_equal Pathname, "string".to_p.class
+  def test_has_extension
+    assert_equal 'txt', Pathname.new('folder/file.txt').extension
+  end
+  
+  def test_has_file_name
+    assert_equal 'file', Pathname.new('folder/file.txt').file_name
   end
 
 end
 
+class TestString < MiniTest::Unit::TestCase
 
-class TestPathname < Test::Unit::TestCase
-
-  should "have an extension" do
-    assert_equal 'txt', Pathname.new('folder/file.txt').extension
-  end
-  
-  should "have a file name" do
-    assert_equal 'file', Pathname.new('folder/file.txt').file_name
+  def test_converts_to_pathname
+    assert_equal Pathname, 'string'.to_p.class
   end
 
 end

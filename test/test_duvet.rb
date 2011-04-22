@@ -1,30 +1,17 @@
-require 'helper'
+require_relative 'helper'
 
-class TestDuvet < Test::Unit::TestCase
+class TestDuvet < MiniTest::Unit::TestCase
 
-  should "have a version" do
+  def test_has_version
     assert Duvet::VERSION
   end
   
-  should "have defaults" do
+  def test_has_defaults
     assert_equal({:dir => 'cov', :style => 'rcov'}, Duvet::DEFAULTS)
   end
   
-  should "have a template path" do
+  def test_has_template_path
     assert Duvet::TEMPLATE_PATH.include?('../templates')
-  end
-
-
-  context "something" do
-    
-    setup do
-      # something
-    end
-    
-    should "something" do
-      assert_equal "your mum", "your face"
-    end
-    
   end
 
 end
