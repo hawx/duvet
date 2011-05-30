@@ -17,9 +17,8 @@ module Duvet
     end
     
     def format
-      template = (TEMPLATE_PATH + 'html' + 'index.haml').read
-      haml_engine = Haml::Engine.new(template)
-      haml_engine.render(nil, TEMPLATE_HASH.merge(self.data))
+      template = (TEMPLATE_PATH + 'html' + 'index.erb').read
+      Erubis::Eruby.new(template).result(TEMPLATE_HASH.merge(self.data))
     end
     
     def write(dir)
@@ -28,14 +27,12 @@ module Duvet
         File.open(dir + 'index.html', 'w') {|f| f.write(format) }
         
         each {|c| c.write(dir) }
-        
         write_resources(dir)
       else
         warn "No files to create coverage for."
       end
     end
 
-    # @todo Allow you to change style used
     def write_resources(dir)
       Pathname.glob(TEMPLATE_PATH + 'css' + '*').each do |i|
         f = File.new(dir + 'styles.css', 'w')

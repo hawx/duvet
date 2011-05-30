@@ -5,9 +5,7 @@ module Duvet
     def initialize(path, cov)
       @path = Pathname.new(path)
       if @path.to_s.include?(Dir.pwd)
-        a = Dir.pwd.size + 1
-        @path = Pathname.new(path[a..-1])
-        #@path = @path.relative_path_from(Pathname.getwd)
+        @path = @path.relative_path_from(Pathname.getwd)
       end
       
       @cov = cov
@@ -89,10 +87,8 @@ module Duvet
     #
     # @return [String]
     def format
-      template = File.read File.join(TEMPLATE_PATH, 'html', 'file.haml')
-      haml_engine = Haml::Engine.new(template)
-      output = haml_engine.render(nil, TEMPLATE_HASH.merge(self.data))
-      output
+      template = (TEMPLATE_PATH + 'html' + 'file.erb').read
+      Erubis::Eruby.new(template).result(TEMPLATE_HASH.merge(self.data))
     end
     
     def write(dir)

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= file['path'] %></title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="plugins.js"></script>
+  </head>
+  
+  <body>
+    <header>
+      <h1><a href="index.html">Coverage</a></h1>
+      <h2><%= file['path'] %></h2>
+    </header>
+    
+    <div class="table-wrapper">
+      <table class="summary" border="none">
+        <thead>
+           <tr>
+             <th>Name</th>
+             <th>Total Lines</th>
+             <th>Lines of Code</th>
+             <th>Lines Ran</th>
+             <th>Total Coverage</th>
+             <th>Code Coverage</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td class="name"><%= file['path'] %></td>
+             <td><%= file['lines'] %></td>
+             <td><%= file['lines_code']%></td>
+             <td><%= file['lines_ran']%></td>
+             <td><%= coverage['total']%></td>
+             <td><%= coverage['code']%></td>
+           </tr>
+         </tbody>
+      </table>
+    </div>
+    
+    <div class="table-wrapper">
+      <table class="source" border="none">
+        <% file['source'].zip(coverage['lines']).each_with_index do |(line, count), i| %>
+          <% if count.nil? %>
+            <tr class="excluded">
+              <td class="no"><%= i %></td>
+              <td><pre><code><%= line %></code></pre></td>
+            </tr>
+            
+          <% else %>
+            <tr class="<%= count.zero? ? "unran" : "ran" %>">
+              <td class="no"><%= i %></td>
+              <td><pre><code><%= line %></code></pre><span class="count"><%= count %></span></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+          
+          
+    <footer>
+      <span>
+        Generated at <%= time %> with 
+        <a href="http://github.com/hawx/duvet"><%= name %> <%= version %></a>
+      </span>
+    </footer>
+  </body>
+</html>
+              

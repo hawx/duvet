@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Coverage</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="plugins.js"></script>
+  </head>
+  <body>
+  
+    <header>
+      <h1>Coverage</h1>
+    </header>
+    
+    <input id="filter" name="filter" type="text" placeholder="Filter..." />
+    
+    <div class="table-wrapper">
+      <table class="summary sort" border="none">
+        <thead>
+          <tr>
+            <th class="name">Name</th>
+            <th class="lines">Total Lines</th>
+            <th class="loc">Lines of Code</th>
+            <th class="ran">Lines Ran</th>
+            <th class="cov">Total Coverage</th>
+            <th class="code">Code Coverage</th>
+          </tr>
+        </thead>
+        
+        <tfoot>
+          <tr class="totals">
+            <td>Total</td>
+            <td class="lines"></td>
+            <td class="loc"></td>
+            <td class="ran"></td>
+            <td class="cov"></td>
+            <td class="code"></td>
+          </tr>
+        </tfoot>
+        
+        <tbody>
+          <% files.each do |f| %>
+            <tr>
+              <td class="name">
+                <a href="<%= f['file']['url'] %>"><%= f['file']['path'] %></a>
+              </td>
+              <td class="lines"><%= f['file']['lines'] %></td>
+              <td class="loc"><%= f['file']['lines_code'] %></td>
+              <td class="ran"><%= f['file']['lines_ran'] %></td>
+              <td class="cov"><%= f['coverage']['total'] %></td>
+              <td class="code"><%= f['coverage']['code'] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+    <footer>
+      <span>
+        Generated at <%= time %> with 
+        <a href="http://github.com/hawx/duvet"><%= name %> <%= version %></a>
+      </span>
+    </footer>
+  
+  </body>
+</html>
+              
