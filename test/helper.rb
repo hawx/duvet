@@ -10,5 +10,10 @@ Duvet.start :filter => 'lib/duvet'
 require 'minitest/mock'
 require 'minitest/pride'
 
+require 'rr'
+class MiniTest::Unit::TestCase
+  include RR::Adapters::TestUnit
+end
+
 MiniTest::Unit.autorun
 

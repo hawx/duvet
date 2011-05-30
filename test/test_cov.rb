@@ -7,6 +7,11 @@ class TestCov < MiniTest::Unit::TestCase
     @cov = Duvet::Cov.new('test_duvet/lib/klass.rb', @lines)
   end
   
+  def test_cleans_path
+    cov = Duvet::Cov.new(Dir.pwd + '/test.rb', @lines)
+    assert_equal Pathname.new('test.rb'), cov.path
+  end
+  
   def test_has_lines
     assert_equal @lines, @cov.lines
   end
@@ -52,6 +57,20 @@ class TestCov < MiniTest::Unit::TestCase
     assert_equal "62.50%", cov_data['code']
     assert_equal "50.00%", cov_data['total']
     assert_equal @lines, cov_data['lines']
+  end
+  
+  def test_renders_with_template
+    stub.proxy(::Erubis::Eruby).new do |obj|
+      stub(obj).result { "yeah" }
+      obj
+    end
+
+    assert_equal @cov.format, "yeah"
+  end
+  
+  def test_writes_file
+    stub(File).open("/dev/null/klass.html", 'w')
+    @cov.write(Pathname.new("/dev/null"))
   end
 
 end

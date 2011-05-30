@@ -35,5 +35,33 @@ EOS
   def test_has_data_hash
     assert_kind_of Array, @covs.data['files']
   end
+  
+  def test_renders_with_template
+    stub.proxy(::Erubis::Eruby).new do |obj|
+      stub(obj).result { "yeah" }
+      obj
+    end
+    
+    assert_equal "yeah", @covs.format
+  end
+  
+  def test_writes_files
+    dir = Pathname.new("tmp")
+  
+    stub(FileUtils).mkdir_p(dir)
+    stub(File).open(dir + 'index.html', 'w')
+    
+    @covs.each {|i| stub(i).write(dir) }
+    stub(@covs).write_resources(dir)
+    
+    @covs.write(dir)
+  end
+  
+  def test_warns_if_no_files_to_write
+    empty_covs = Duvet::Covs.new({})
+    assert_output nil, "No files to create coverage for.\n" do
+      empty_covs.write(nil)
+    end
+  end
 
 end
