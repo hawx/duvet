@@ -4,7 +4,7 @@ class TestCov < MiniTest::Unit::TestCase
 
   def setup
     @lines = [5, 2, nil, 2, 4, 3, 0, 0, 0, nil]
-    @cov = Duvet::Cov.new('test_duvet/lib/klass.rb', @lines)
+    @cov = Duvet::Cov.new('lib/duvet.rb', @lines)
   end
   
   def test_cleans_path
@@ -41,13 +41,13 @@ class TestCov < MiniTest::Unit::TestCase
   end
   
   def test_creates_report
-    assert_equal "test_duvet/lib/klass.rb\n  total: 50.00%\n  code:  62.50%\n\n", @cov.report
+    assert_equal "lib/duvet.rb\n  total: 50.00%\n  code:  62.50%\n\n", @cov.report
   end
   
   def test_has_data_hash
     file_data = @cov.data['file']
-    assert_equal 'test_duvet/lib/klass.rb', file_data['path']
-    assert_equal 'klass.html', file_data['url']
+    assert_equal 'lib/duvet.rb', file_data['path']
+    assert_equal 'duvet.html', file_data['url']
     # assert_equal '', @path.readlines
     assert_equal 10, file_data['lines']
     assert_equal 8, file_data['lines_code']
@@ -69,7 +69,7 @@ class TestCov < MiniTest::Unit::TestCase
   end
   
   def test_writes_file
-    stub(File).open("/dev/null/klass.html", 'w')
+    stub(File).open("/dev/null/duvet.html", 'w')
     @cov.write(Pathname.new("/dev/null"))
   end
 

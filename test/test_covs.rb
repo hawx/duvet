@@ -4,8 +4,8 @@ class TestCovs < MiniTest::Unit::TestCase
 
   def setup
     @files = {
-      'test_duvet/lib/run.rb' => [3, 2, 1, 0, nil],
-      'test_duvet/lib/klass.rb' => [nil, nil, 0, 1, 2]
+      'lib/duvet.rb' => [3, 2, 1, 0, nil],
+      'lib/duvet/cov.rb' => [nil, nil, 0, 1, 2]
     }
     @covs = Duvet::Covs.new(@files)
   end
@@ -19,11 +19,11 @@ class TestCovs < MiniTest::Unit::TestCase
   
   def test_creates_report
     report = <<EOS
-test_duvet/lib/run.rb
+lib/duvet.rb
   total: 60.00%
   code:  75.00%
 
-test_duvet/lib/klass.rb
+lib/duvet/cov.rb
   total: 40.00%
   code:  66.67%
 
