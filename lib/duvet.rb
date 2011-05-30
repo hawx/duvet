@@ -6,7 +6,7 @@
 
 require 'coverage'
 require 'pathname'
-require 'haml'
+require 'erubis'
 require 'sass'
 
 require 'duvet/core_ext'
