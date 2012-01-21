@@ -1,34 +1,45 @@
 module Duvet
+
+  # A single file along with coverage data.
   class Cov
     attr_accessor :path
-    
+
     def initialize(path, cov)
       @path = Pathname.new(path)
       if @path.to_s.include?(Dir.pwd)
         @path = @path.relative_path_from(Pathname.getwd)
       end
-      
+
       @cov = cov
     end
-    
-    # @return [Array] lines in file
+
+    # @return [Array] Coverage data of lines in the file
     def lines
       @cov
     end
-    
-    # @return [Array] all lines which can be executed
+
+    # @return [Array] Coverage data for all the lines which can be executed
     def code_lines
-      @cov.reject {|i| i.nil?}
+      lines.reject {|i| i.nil?}
     end
-    
-    # @return [Array] all lines which have been ran
+
+    # @return [Array] Coverage data for all the lines which have been ran
     def ran_lines
-      @cov.reject {|i| i.nil? || i.zero?}
+      code_lines.reject {|i| i.zero?}
     end
-    
-    # Gives a fraction from 0 to 1 of how many lines of code have 
-    # been executed. It ignores all lines that couldn't be executed
-    # such as comments.
+
+    # Gives a real number between 0 and 1 indicating how many lines have been
+    # executed.
+    #
+    # @return [Float] lines executed as a fraction
+    def total_coverage
+      return 0.0 if lines.size.zero?
+      ran_lines.size.to_f / lines.size.to_f
+    end
+
+    # Gives a real number between 0 and 1 indicating how many lines of code have
+    # been executed. It ignores all lines that can not be executed such as
+    # comments.
     #
     # @return [Float] lines of code executed as a fraction
     def code_coverage
@@ -36,65 +47,47 @@ module Duvet
       ran_lines.size.to_f / code_lines.size.to_f
     end
 
-    # Similar to #code_coverage but counts all lines, executable
-    # or not.
-    #
-    # @return [Integer] lines executed as a fraction
-    def total_coverage
-      return 0.0 if lines.size.zero?
-      ran_lines.size.to_f / lines.size.to_f
+    # @param [Float] Number to format
+    # @return [String] The number formatted as a percentage, ??.??%
+    def percent(num)
+      "%.2f%" % (num * 100)
     end
-    
-    # @return [String] #code_coverage as ??.??%
-    def code_coverage_percent
-      "%.2f%" % (code_coverage*100)
-    end
-    
-    # @return [String] #total_coverage as ??.??%
-    def total_coverage_percent
-      "%.2f%" % (total_coverage*100)
-    end
-    
-    # @return [String]
+
+    # @return [String] A simple text report of coverage
     def report
-      str = "#{@path}\n"
-      str << "  total: #{total_coverage_percent}\n"
-      str << "  code:  #{code_coverage_percent}\n\n"
-      str
+      <<EOS
+#{@path}
+  total: #{percent(total_coverage)}
+  code:  #{percent(code_coverage)}
+EOS
     end
-    
-    # @return [Hash] a hash of data for templating
+
+    # @return [Hash] Data for templating
     def data
       {
-        "file" => {
-          "path" => @path.to_s,
-          "url" => @path.file_name + '.html',
-          "source" => @path.readlines,
-          "lines" => lines.size,
-          "lines_code" => code_lines.size,
-          "lines_ran" => ran_lines.size
+        file: {
+          path:   @path.to_s,
+          url:    @path.to_s[0..-@path.extname.size] + 'html',
+          root:   '../' * @path.to_s.count('/'),
+          source: @path.readlines,
         },
-        "coverage" => {
-          "code" => code_coverage_percent,
-          "total" => total_coverage_percent,
-          "lines" => lines
+        lines: {
+          total:  lines.size,
+          code:   code_lines.size,
+          ran:    ran_lines.size
+        },
+        coverage: {
+          code:   percent(code_coverage),
+          total:  percent(total_coverage),
+          lines:  lines
         }
       }
     end
-    
-    # Formats the coverage for the file to be written to a html
-    # file, then viewed in a web browser.
-    #
-    # @return [String]
-    def format
-      template = (TEMPLATE_PATH + 'html' + 'file.erb').read
-      Erubis::Eruby.new(template).result(TEMPLATE_HASH.merge(self.data))
+
+    # Writes the file
+    def write
+      Duvet.write data, 'html/file.erb'
     end
-    
-    def write(dir)
-      path = (dir + @path.file_name).to_s + '.html'
-      File.open(path, 'w') {|f| f.write(self.format) }
-    end
-  
+
   end
 end

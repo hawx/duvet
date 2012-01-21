@@ -7,13 +7,7 @@ Coverage.start
 require_relative '../lib/duvet'
 Duvet.start :filter => 'lib/duvet'
 
-require 'minitest/mock'
+require 'minitest/autorun'
 require 'minitest/pride'
 
-require 'rr'
-class MiniTest::Unit::TestCase
-  include RR::Adapters::TestUnit
-end
-
-MiniTest::Unit.autorun
-
+require 'mocha'

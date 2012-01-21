@@ -1,49 +1,37 @@
 module Duvet
+
+  # A list of Cov objects.
   class Covs < Array
-  
-    def initialize(cov)
-      self.replace []
-      cov.each do |path, c|
-        self << Cov.new(path, c)
-      end
+
+    # Creates a new Covs array from the data given by Coverage.
+    #
+    # @param data [Hash] Data given by Coverage
+    def self.from_data(data)
+      new data.map {|p,c| Cov.new(p, c) }
     end
-  
+
+    # @return [String] A simple text report of coverage
     def report
-      map {|i| i.report }.join('')
+      map(&:report).join("\n") + "\n"
     end
-    
+
+    # @return [Hash] Data used for templating
     def data
-      { 'files' => map {|i| i.data } }
-    end
-    
-    def format
-      template = (TEMPLATE_PATH + 'html' + 'index.erb').read
-      Erubis::Eruby.new(template).result(TEMPLATE_HASH.merge(self.data))
-    end
-    
-    def write(dir)
-      if size > 0
-        FileUtils.mkdir_p(dir)
-        File.open(dir + 'index.html', 'w') {|f| f.write(format) }
-        
-        each {|c| c.write(dir) }
-        write_resources(dir)
-      else
-        warn "No files to create coverage for."
-      end
+      {
+        files: map(&:data),
+        file: {
+          url: 'index.html'
+        }
+      }
     end
 
-    def write_resources(dir)
-      Pathname.glob(TEMPLATE_PATH + 'css' + '*').each do |i|
-        f = File.new(dir + 'styles.css', 'w')
-        f.write Sass::Engine.new(i.read).render
-      end
+    # Writes the index and individual files.
+    def write
+      warn "No files to create coverage for." if empty?
 
-      Pathname.glob(TEMPLATE_PATH + 'js' + '*').each do |i|
-        f = File.new(dir + i.basename, 'w')
-        f.write(i.read)
-      end
+      each &:write
+      Duvet.write data, 'html/index.erb'
     end
-  
+
   end
 end

@@ -9,13 +9,13 @@
     <script type="text/javascript" src="plugins.js"></script>
   </head>
   <body>
-  
+
     <header>
       <h1>Coverage</h1>
     </header>
-    
+
     <input id="filter" name="filter" type="text" placeholder="Filter..." />
-    
+
     <div class="table-wrapper">
       <table class="summary sort" border="none">
         <thead>
@@ -28,7 +28,7 @@
             <th class="code">Code Coverage</th>
           </tr>
         </thead>
-        
+
         <tfoot>
           <tr class="totals">
             <td>Total</td>
@@ -39,31 +39,30 @@
             <td class="code"></td>
           </tr>
         </tfoot>
-        
+
         <tbody>
           <% files.each do |f| %>
             <tr>
               <td class="name">
-                <a href="<%= f['file']['url'] %>"><%= f['file']['path'] %></a>
+                <a href="<%= f.file.url %>"><%= f.file.path %></a>
               </td>
-              <td class="lines"><%= f['file']['lines'] %></td>
-              <td class="loc"><%= f['file']['lines_code'] %></td>
-              <td class="ran"><%= f['file']['lines_ran'] %></td>
-              <td class="cov"><%= f['coverage']['total'] %></td>
-              <td class="code"><%= f['coverage']['code'] %></td>
+              <td class="lines"><%= f.lines.total %></td>
+              <td class="loc"><%= f.lines.code %></td>
+              <td class="ran"><%= f.lines.ran %></td>
+              <td class="cov"><%= f.coverage.total %></td>
+              <td class="code"><%= f.coverage.code %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
-    
+
     <footer>
       <span>
-        Generated at <%= time %> with 
+        Generated at <%= time %> with
         <a href="http://github.com/hawx/duvet"><%= name %> <%= version %></a>
       </span>
     </footer>
-  
+
   </body>
 </html>
-              
