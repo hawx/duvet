@@ -48,5 +48,5 @@ engineering site by Aaron Patterson.
 Copyright (c) 2010-11 Joshua Hawxwell. See LICENSE for details.
 
 
-[covg]: http://hawx.github.com/duvet
+[covg]: http://hawx.github.com/duvet/cov
 [post]: http://engineering.attinteractive.com/2010/08/code-coverage-in-ruby-1-9/
